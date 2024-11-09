@@ -1,10 +1,19 @@
-import { Room } from "./components/Room";
-import { CollaborativeApp } from "./components/CollaborativeApp";
+// app/page.tsx
+'use client';
 
-export default function Page() {
+import React from 'react';
+import LiveblocksProviderWrapper from './components/LiveblocksProviderWrapper';
+import Room from './components/Room';
+import CollaborativeApp from './components/CollaborativeApp';
+
+const Page: React.FC = () => {
   return (
-    <Room>
-      <CollaborativeApp />
-    </Room>
+    <LiveblocksProviderWrapper>
+      <Room roomId="collaborative-room">
+        <CollaborativeApp />
+      </Room>
+    </LiveblocksProviderWrapper>
   );
-}
+};
+
+export default Page;

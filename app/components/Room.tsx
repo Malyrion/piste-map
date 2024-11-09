@@ -1,29 +1,20 @@
-"use client";
-import { ReactNode } from "react";
-import {
-  LiveblocksProvider,
-  RoomProvider,
-  ClientSideSuspense,
-} from "@liveblocks/react/suspense";
+// app/components/Room.tsx
+'use client';
 
-interface LiveblocksProvider{
-    publicApiKey:string
+import React, { ReactNode } from 'react';
+import { RoomProvider } from '@liveblocks/react';
+
+interface Props {
+  children: ReactNode;
+  roomId: string;
 }
 
-interface RoomProps {
-    children: ReactNode;
-  }
-
-export function Room({ children }: { children: ReactNode }) {
+const Room: React.FC<Props> = ({ children, roomId }) => {
   return (
-    <LiveblocksProvider publicApiKey={'pk_dev_8u1X1Fqx0K_XGVn7ncaIFIawWOvMram4caYDlF2SLL-pBB7GE7NwGozM68THSTNW'}>
-      <RoomProvider id="my-room" 
-              initialPresence={{ cursor: { x: 0, y: 0 } }} // Set initial cursor position here
-      >
-        <ClientSideSuspense fallback={<div>Loading…</div>}>
-          {children}
-        </ClientSideSuspense>
-      </RoomProvider>
-    </LiveblocksProvider>
+    <RoomProvider id={roomId} initialPresence={{ cursor: { x: 0, y: 0 } }}>
+      {children}
+    </RoomProvider>
   );
-}
+};
+
+export default Room;
