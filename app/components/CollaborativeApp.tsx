@@ -12,26 +12,50 @@ export function CollaborativeApp() {
   const others = useOthers();
   const userCount = others.length;
 
-  // Function to save board state to local storage
-  const saveSnapshot = () => {
-    if (!editorRef.current) return;
-    const snapshot = getSnapshot(editorRef.current.store);
-    localStorage.setItem('tldraw_snapshot', JSON.stringify(snapshot));
-    console.log('Snapshot saved to local storage.');
+// Function to save board state to the database
+const saveSnapshot = async () => {
+	if (!editorRef.current) return;
+	const snapshot = getSnapshot(editorRef.current.store);
+	const serializedData = JSON.stringify(snapshot);
+  
+	try {
+	  const response = await fetch('/api/saveBoard', {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ boardData: serializedData }),
+	  });
+  
+	  if (!response.ok) throw new Error('Failed to save the board data');
+	  console.log('Board data saved successfully.');
+	} catch (error) {
+	  console.error('Error saving board data:', error);
+	}
   };
-
-  // Function to load board state from local storage
-  const loadSnapshotFromStorage = () => {
-    if (!editorRef.current) return;
-    const snapshot = localStorage.getItem('tldraw_snapshot');
-    if (snapshot) {
-      loadSnapshot(editorRef.current.store, JSON.parse(snapshot));
-      console.log('Snapshot loaded from local storage.');
-    } else {
-      console.log('No snapshot found in local storage.');
-    }
+  
+  // Function to load board state from the database
+  const loadSnapshotFromStorage = async () => {
+	if (!editorRef.current) return;
+  
+	try {
+	  const response = await fetch('/api/loadBoard', {
+		method: 'GET',
+		headers: {
+		  'Content-Type': 'application/json',
+		},
+	  });
+  
+	  if (!response.ok) throw new Error('Failed to load the board data');
+  
+	  const { boardData } = await response.json();
+	  const parsedData = JSON.parse(boardData);
+	  loadSnapshot(editorRef.current.store, parsedData);
+	  console.log('Board data loaded successfully.');
+	} catch (error) {
+	  console.error('Error loading board data:', error);
+	}
   };
-
   // Handle editor mount
   const handleMount = (editor) => {
     editorRef.current = editor;
