@@ -12,16 +12,17 @@ interface LiveblocksProvider{
 
 interface RoomProps {
     children: ReactNode;
+    userId: string // Pass user ID as a prop
+    roomId: string // Pass room ID as a prop
   }
 
-export function Room({ children }: { children: ReactNode }) {
+export function Room({ children, userId, roomId }: RoomProps) {
   return (
     <LiveblocksProvider publicApiKey={'pk_dev_8u1X1Fqx0K_XGVn7ncaIFIawWOvMram4caYDlF2SLL-pBB7GE7NwGozM68THSTNW'}>
-      <RoomProvider id="my-room" 
-              initialPresence={{ cursor: { x: 0, y: 0 } }} // Set initial cursor position here
-      >
+      <RoomProvider id={roomId} 
+              initialPresence={{ cursor: { x: 0, y: 0 } }}>
         <ClientSideSuspense fallback={<div>Loading…</div>}>
-          {children}
+          {()=>children}
         </ClientSideSuspense>
       </RoomProvider>
     </LiveblocksProvider>

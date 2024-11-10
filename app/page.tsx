@@ -3,7 +3,7 @@ import { CollaborativeApp } from "./components/CollaborativeApp";
 
 export default function Page() {
   return (
-    <Room>
+    <Room userId='1001' roomId='room1001' >
       <CollaborativeApp />
     </Room>
   );
