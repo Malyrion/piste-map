@@ -1,0 +1,3 @@
+npm install pg @liveblocks/client @liveblocks/react
+npm i tldraw
+npm install axios
