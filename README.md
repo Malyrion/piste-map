@@ -1,5 +1,5 @@
 ## Piste Map annotation webapp:
-- An app that allows muliple users to upload an image and add annotations in real-time to create a piste map.
+- An app that allows muliple users to upload an image and add annotations in real-time to create a piste map. Read more at https://medium.com/@maksymmalynovskyi/c66852f8ce72
 ## Libraries and Frameworks Used
 
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
