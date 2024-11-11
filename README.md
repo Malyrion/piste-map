@@ -46,25 +46,28 @@
 
 ## Porject Structure
 - `tsconfig.json` -> TypeScript configuration file.
-- ` liveblocks.config.ts `-> Configuration file for the interfaces of Liveblocks elements, detailing the data they pass.
+- `liveblocks.config.ts `-> Configuration file for the interfaces of Liveblocks elements, detailing the data they pass.
 - `pages/api `-> Folder path for the API endpoints defined in the project.
--` pages/api/loadBoard.ts` -> API file used to manage database calls, specifically for loading the last saved version of the board.
+- `pages/api/loadBoard.ts` -> API file used to manage database calls, specifically for loading the last saved version of the board.
 - `pages/api/saveBoard.ts` -> API file used to save snapshots of the Tldraw board to the SQL database.
 - `app/components/CollaborativeApp.tsx` -> Component that initializes the Tldraw canvas, including button logic for saving and loading the board state from the database.
 - `app/components/Room.tsx` -> Room component that includes the LiveblocksProvider wrapper with apiKey, RoomProvider instance, fallback configuration, initial mouse position presence, and child components as props.
 - `app/components/assets-urls.tsx` -> Imports TLUiAssetUrlOverrides from Tldraw to specify URLs for images used in custom tooltips.
 - `app/components/components.tsx` -> Extends TLComponents and DefaultToolbar of Tldraw with additional tools for inserting specific text icons.
 - `app/components/custom-tools.tsx` -> File defining properties of custom tools.
-- - `app/components/ui-overrides.ts` -> Ui override component to overwrite custom tooltip in Tldraw
+- `app/components/ui-overrides.ts` -> Ui override component to overwrite custom tooltip in Tldraw
  
- ## Database sturcure
- Here are some database entries usesd to store and load the board snapshots
- ![image](https://github.com/user-attachments/assets/75398fa0-703f-4460-a7f1-13b9472374f9)
+## Database Structure
 
- The database will have to be changed to account for users and keep track of all boards that they have made, it should look something like this: 
- ![image](https://github.com/user-attachments/assets/71663ee0-ac59-4e26-a18d-a32e0b4fa7b3)
- It than can be used to display all boards that the user owns on the canvas
+Here are some database entries used to store and load the board snapshots:
 
- 
+![image](https://github.com/user-attachments/assets/75398fa0-703f-4460-a7f1-13b9472374f9)
+
+The database will have to be changed to account for users and keep track of all boards that they have made; it should look something like this:
+
+![image](https://github.com/user-attachments/assets/71663ee0-ac59-4e26-a18d-a32e0b4fa7b3)
+
+It can then be used to display all boards that the user owns on the canvas.
+
 
   
