@@ -6,7 +6,7 @@
   .save-button {
     position: absolute;
     top: 10px;
-    right: 400px;
+    right: 450px;
     z-index: 10; /* Ensures it's above the canvas */
     padding: 8px 16px;
     font-size: 14px;
