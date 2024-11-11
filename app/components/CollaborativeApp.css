@@ -1,34 +1,50 @@
-/* Create a CSS file, e.g., CollaborativeApp.css */
 .tldraw-container {
-    position: relative;
-  }
-  
-  .save-button {
-    position: absolute;
-    top: 10px;
-    right: 450px;
-    z-index: 10; /* Ensures it's above the canvas */
-    padding: 8px 16px;
-    font-size: 14px;
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  position: relative;
+}
 
-  .load-button {
-    position: absolute;
-    top: 10px;
-    right: 300px; /* Adjusted position to the left of the Save button */
-    z-index: 10;
-    padding: 8px 16px;
-    font-size: 14px;
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+.save-button {
+  position: absolute;
+  top: 10px;
+  right: 450px;
+  z-index: 10;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.load-button {
+  position: absolute;
+  top: 10px;
+  right: 300px;
+  z-index: 10;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: fade-in-out 3s;
+}
+
+@keyframes fade-in-out {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}

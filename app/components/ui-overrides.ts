@@ -1,4 +1,3 @@
-// ui-overrides.ts
 import { TLUiOverrides } from 'tldraw'
 
 export const uiOverrides: TLUiOverrides = {

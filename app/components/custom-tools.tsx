@@ -1,50 +1,46 @@
-// custom-tools.ts
-import { StateNode } from 'tldraw'
+import { StateNode } from 'tldraw';
 
-const OFFSET = 12
+// Position offset for placing icons slightly away from the pointer location
+const OFFSET = 12;
 
 // Toilets Sticker Tool
 export class ToiletsTool extends StateNode {
-    static override id = 'toilets'
-  
-    override onEnter() {
-      this.editor.setCursor({ type: 'cross', rotation: 0 })
-    }
-  
-    override onPointerDown() {
-      const { currentPagePoint } = this.editor.inputs
-      this.editor.createShape({
-        type: 'text',
-        x: currentPagePoint.x - OFFSET,
-        y: currentPagePoint.y - OFFSET,
-        props: { text: '🚻',
-        
+  static override id = 'toilets'; // Unique ID for the ToiletsTool
 
-         }, // Toilets icon
-        
-      })
-    }
+  // Set cursor to a crosshair when the tool is activated
+  override onEnter() {
+    this.editor.setCursor({ type: 'cross', rotation: 0 });
   }
-  
-  // Food Sticker Tool
-  export class FoodTool extends StateNode {
-    static override id = 'food'
-  
-    override onEnter() {
-      this.editor.setCursor({ type: 'cross', rotation: 0 })
-    }
-  
-    override onPointerDown() {
-      const { currentPagePoint } = this.editor.inputs
-      this.editor.createShape({
-        type: 'text',
-        x: currentPagePoint.x - OFFSET,
-        y: currentPagePoint.y - OFFSET,
-        props: { text: '🍴',
 
-         }, // Food icon (fork and knife)
-      })
-    }
+  // Create the toilet icon shape on the canvas at the pointer position
+  override onPointerDown() {
+    const { currentPagePoint } = this.editor.inputs; // Get current pointer location
+    this.editor.createShape({
+      type: 'text',                     // Shape type set to text for emoji rendering
+      x: currentPagePoint.x - OFFSET,   // Adjust x position by offset
+      y: currentPagePoint.y - OFFSET,   // Adjust y position by offset
+      props: { text: '🚻' },            // Set text property to the toilet emoji
+    });
   }
-  
+}
 
+// Food Sticker Tool
+export class FoodTool extends StateNode {
+  static override id = 'food'; // Unique ID for the FoodTool
+
+  // Set cursor to a crosshair when the tool is activated
+  override onEnter() {
+    this.editor.setCursor({ type: 'cross', rotation: 0 });
+  }
+
+  // Create the food icon shape on the canvas at the pointer position
+  override onPointerDown() {
+    const { currentPagePoint } = this.editor.inputs; // Get current pointer location
+    this.editor.createShape({
+      type: 'text',                     // Shape type set to text for emoji rendering
+      x: currentPagePoint.x - OFFSET,   // Adjust x position by offset
+      y: currentPagePoint.y - OFFSET,   // Adjust y position by offset
+      props: { text: '🍴' },            // Set text property to the food emoji
+    });
+  }
+}

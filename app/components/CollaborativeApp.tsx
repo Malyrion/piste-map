@@ -6,35 +6,42 @@ import React, { useRef, useState } from 'react';
 import 'tldraw/tldraw.css';
 import './CollaborativeApp.css';
 
-// Custom imports
+// Custom imports for added tools, UI overrides, components, and asset URLs
 import { ToiletsTool, FoodTool } from './custom-tools';
 import { uiOverrides } from './ui-overrides';
 import { components } from './components';
 import { customAssetUrls } from './asset-urls';
 
-const customTools = [ToiletsTool, FoodTool];
+const customTools = [ToiletsTool, FoodTool]; // Custom tools for additional functionality
 
+// Main collaborative application component
 export function CollaborativeApp() {
   // References and state
-  const editorRef = useRef<any>(null);
-  const store = useSyncDemo({ roomId: 'myapp-abc1256' });
-  const others = useOthers();
-  const userCount = others.length;
-  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const editorRef = useRef<any>(null); // Ref to access the editor instance
+  const store = useSyncDemo({ roomId: 'myapp-abc1256' }); // Store for syncing board data
+  const others = useOthers(); // Other online users
+  const userCount = others.length; // Count of online users
+  const [popupMessage, setPopupMessage] = useState<string | null>(null); // State to handle popup messages
 
-  // Utility function to display popup notifications
+  // Popup component for displaying short messages to the user
+  const Popup: React.FC<{ message: string }> = ({ message }) => (
+    <div className="popup">{message}</div>
+  );
+
+  // Utility function to display popup notifications for 3 seconds
   const showPopup = (message: string) => {
     setPopupMessage(message);
-    setTimeout(() => setPopupMessage(null), 3000); // Hide after 3 seconds
+    setTimeout(() => setPopupMessage(null), 3000); // Hide popup after 3 seconds
   };
 
-  // Save board state to database
+  // Function to save the current board state to the database
   const saveSnapshot = async () => {
-    if (!editorRef.current) return;
-    const snapshot = getSnapshot(editorRef.current.store);
-    const serializedData = JSON.stringify(snapshot);
-    
+    if (!editorRef.current) return; // Exit if editor is not ready
+    const snapshot = getSnapshot(editorRef.current.store); // Capture current editor state
+    const serializedData = JSON.stringify(snapshot); // Serialize snapshot for storage
+
     try {
+      // Send serialized data to the backend API
       const response = await fetch('/api/saveBoard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,11 +55,12 @@ export function CollaborativeApp() {
     }
   };
 
-  // Load board state from database
+  // Function to load the saved board state from the database
   const loadSnapshotFromStorage = async () => {
-    if (!editorRef.current) return;
-    
+    if (!editorRef.current) return; // Exit if editor is not ready
+
     try {
+      // Request saved board data from the backend API
       const response = await fetch('/api/loadBoard', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -60,7 +68,7 @@ export function CollaborativeApp() {
       if (!response.ok) throw new Error('Failed to load the board data');
 
       const { boardData }: { boardData: string } = await response.json();
-      loadSnapshot(editorRef.current.store, JSON.parse(boardData));
+      loadSnapshot(editorRef.current.store, JSON.parse(boardData)); // Load snapshot into the editor
       showPopup('Board data loaded successfully!');
     } catch (error) {
       showPopup('Error loading board data. Please try again.');
@@ -68,14 +76,14 @@ export function CollaborativeApp() {
     }
   };
 
-  // Handle editor mount
+  // Function called when the editor instance is mounted
   const handleMount = (editor: any) => {
-    editorRef.current = editor;
+    editorRef.current = editor; // Save editor instance reference
   };
 
   return (
     <div className="collaborative-app">
-      {/* Online users count */}
+      {/* Display count of online users */}
       <div>There are {userCount} other user(s) online</div>
 
       {/* Editor container with custom tools and settings */}
@@ -88,41 +96,15 @@ export function CollaborativeApp() {
         <Tldraw
           onMount={handleMount}
           store={store}
-          tools={customTools}          // Pass custom tools
-          overrides={uiOverrides}       // Pass UI overrides
-          components={components}       // Pass custom components
-          assetUrls={customAssetUrls}   // Pass custom asset URLs
+          tools={customTools}          // Attach custom tools to the editor
+          overrides={uiOverrides}       // Apply UI customizations
+          components={components}       // Add custom components
+          assetUrls={customAssetUrls}   // Load custom asset URLs
         />
       </div>
 
-      {/* Popup notification */}
+      {/* Display popup notification when a message is available */}
       {popupMessage && <Popup message={popupMessage} />}
     </div>
   );
 }
-
-// Popup component for displaying messages
-const Popup: React.FC<{ message: string }> = ({ message }) => (
-  <div className="popup">
-    {message}
-    <style jsx>{`
-      .popup {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #333;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        animation: fade-in-out 3s;
-      }
-      @keyframes fade-in-out {
-        0%, 100% { opacity: 0; }
-        10%, 90% { opacity: 1; }
-      }
-    `}</style>
-  </div>
-);

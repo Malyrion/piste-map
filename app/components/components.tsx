@@ -2,8 +2,6 @@ import {
   TLComponents,
   DefaultToolbar,
   DefaultToolbarContent,
-  DefaultKeyboardShortcutsDialog,
-  DefaultKeyboardShortcutsDialogContent,
   TldrawUiMenuItem,
   useIsToolSelected,
   useTools,
